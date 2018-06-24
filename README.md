@@ -18,7 +18,7 @@ Before you begin, you must authorize this application to access your Google Driv
 
 The first time you run the application, it will prompt you to authorize access. Once authorized, this will not happen again.
 
-You must also modify the GoogleDriveImport.json file to include your Kentico Cloud **Project ID**, **Preview API key**, and **Content Management API Key**. These keys can be found in **the API Keys** page on [https://app.kenticocloud.com](https://app.kenticocloud.com).
+You must also modify the GoogleDriveImport.json file to include your Kentico Cloud **Project ID**, **Preview API key**, and **Content Management API Key**. These keys can be found in **the API Keys** page on [https://app.kenticocloud.com](https://app.kenticocloud.com). Then, move this file into the directory containing GoogleDriveImport.dll.
 
 ### Usage
 
