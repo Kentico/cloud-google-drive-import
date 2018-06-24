@@ -14,7 +14,7 @@ Before you begin, you must authorize this application to access your Google Driv
 5. Select the application type **Other**, enter the name "GoogleDriveImport", and click the **Create** button.
 6. Click **OK** to dismiss the resulting dialog.
 7. Click the **Download JSON** button to the right of the client ID.
-8. Move this file to the directory containing DriveImportCore.dll and rename it **client_secret.json**.
+8. Move this file to the directory containing GoogleDriveImport.dll and rename it **client_secret.json**.
 
 The first time you run the application, it will prompt you to authorize access. Once authorized, this will not happen again.
 
