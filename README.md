@@ -4,7 +4,11 @@ This console application can import files from your personal Google Drive accoun
 
 ### Setup
 
-Clone the repository and build it in Visual Studio.
+Clone the repository and build it in Visual Studio, or by using
+```
+dotnet restore
+dotnet build
+```
 
 Before you begin, you must authorize this application to access your Google Drive account:
 1. Visit [Google's developer console](https://console.developers.google.com/start/api?id=drive) to create or select a project in the Google Developers Console and automatically turn on the API. Click **Continue**, then **Go to credentials**.
@@ -22,7 +26,7 @@ You must also modify the GoogleDriveImport.json file to include your Kentico Clo
 
 ### Usage
 
-In the directory containing the GoogleDriveImport.dll, open a command prompt and type `dotnet GoogleDriveImport.dll`. If you specify no arguments, a GUI will appear and walk you through the process. You may also specify the following arguments to run the program ìsilentlyî from command line:
+In the directory containing the GoogleDriveImport.dll, open a command prompt and type `dotnet GoogleDriveImport.dll`. If you specify no arguments, a GUI will appear and walk you through the process. You may also specify the following arguments to run the program ‚Äúsilently‚Äù from command line:
 
 -	`-s <filename>` or `-source <filename>`
 	The name of the file to import, as it appears in Google Drive.
@@ -35,7 +39,7 @@ In the directory containing the GoogleDriveImport.dll, open a command prompt and
 -	`-u` or `-update`
 	If passed, content items with the same code name as the imported file(s) will be updated with the new content. If not passed, new content items will always be created.
 
-Currently, the importing of a directoryís contents is only supported when supplying parameters from command line, not using the GUI.
+Currently, the importing of a directory‚Äôs contents is only supported when supplying parameters from command line, not using the GUI.
 
 ### Supported file types
 The following file types will be imported into Kentico Cloud as assets:
