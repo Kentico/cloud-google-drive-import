@@ -2,10 +2,8 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/cloud-google-drive-import/v15
-/.vs/config
-/.vs/GoogleDriveImport/v15
-/.vs/VSWorkspaceState.json
+/.vs
+/.vscode
 /obj/Debug/netcoreapp2.0
 /GoogleDriveImport.csproj.user
 /GoogleDriveImport.sln
