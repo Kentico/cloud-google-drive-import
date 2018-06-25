@@ -4,8 +4,7 @@
 
 /.vs
 /.vscode
-/obj/Debug/netcoreapp2.0
 /GoogleDriveImport.csproj.user
 /GoogleDriveImport.sln
-/bin/Debug/netcoreapp2.0
+/bin
 /obj
