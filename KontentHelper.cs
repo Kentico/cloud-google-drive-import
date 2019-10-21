@@ -222,8 +222,17 @@ namespace DriveImportCore
                 var task = clientDelivery.GetTypeAsync(importOptions.contentTypeName);
                 contentType = task.GetAwaiter().GetResult();
 
-                // Obtain target element from content type
-                contentElement = GetElementFromType(contentType, importOptions.targetElementName);
+                // Obtain target element from content type. Skip for spreadsheets
+                bool allSpreadsheets = true;
+                foreach(var f in filestoimport)
+                {
+                    if (!DriveHelper.IsSpreadsheet(f))
+                    {
+                        allSpreadsheets = false;
+                        break;
+                    }
+                }
+                if(!allSpreadsheets) contentElement = GetElementFromType(contentType, importOptions.targetElementName);
                 
                 //Import file(s)
                 foreach (var file in filestoimport)

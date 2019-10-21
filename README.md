@@ -57,6 +57,18 @@ These file types will be imported as content items:
 ### Importing spreadsheets
 If a spreadsheet is imported, each row of the spreadsheet will be imported as a separate content item. The first row of the spreadsheet should contain the codenames of the elements for the content type.
 
- **Important**: the first row of the spreadsheet must contain one header with the text "Name." Other cells under this column should contain the code name of the content item to be created/updated.
+ :warning: The first row of the spreadsheet must contain one header with the text "Name." Other cells under this column should contain the code name of the content item to be created/updated.
+
+ __Example__
+
+If you create a spreadsheet in Google Drive that contains articles like this:
+
+![spreadsheet](/spreadsheet.png)
+
+You can import these articles into Kontent by running the command
+
+```
+dotnet GoogleDriveImport.dll -s Articles -t article -u
+```
  
  ![Analytics](https://kentico-ga-beacon.azurewebsites.net/api/UA-69014260-4/Kentico/kontent-google-drive-import?pixel)
