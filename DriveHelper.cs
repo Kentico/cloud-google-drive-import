@@ -187,7 +187,7 @@ namespace DriveImportCore
         }
 
         /// <summary>
-        /// Returns true if the file should be uploaded to Kentico Cloud as an asset instead of content
+        /// Returns true if the file should be uploaded to Kentico Kontent as an asset instead of content
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>

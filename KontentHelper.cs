@@ -2,7 +2,7 @@
 using KenticoCloud.ContentManagement.Exceptions;
 using KenticoCloud.ContentManagement.Models.Assets;
 using KenticoCloud.ContentManagement.Models.Items;
-using KenticoCloud.Delivery;
+using Kentico.Kontent.Delivery;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,16 +12,16 @@ using System.Threading.Tasks;
 
 namespace DriveImportCore
 {
-    class CloudHelper
+    class KontentHelper
     {
         const string HTML_TAG_PATTERN = "<.*?>";
         const string SPREADSHEET_CODENAME_HEADER = "Name";
-        static DeliveryClient clientDelivery;
+        static IDeliveryClient clientDelivery;
         static ContentManagementClient clientCM;
 
         static ImportOptions importOptions;
 
-        public static void Init(DeliveryClient delclient, ContentManagementClient cmclient)
+        public static void Init(IDeliveryClient delclient, ContentManagementClient cmclient)
         {
             clientDelivery = delclient;
             clientCM = cmclient;
@@ -53,12 +53,18 @@ namespace DriveImportCore
             if (DriveHelper.IsSpreadsheet(file))
             {
                 // Import multiple items
+
                 string[] rows = result.Split("\r\n");
                 string[] headers = rows[0].Split(',');
                 int codenamecolumn = Array.IndexOf(headers, SPREADSHEET_CODENAME_HEADER);
                 for (var i = 1; i < rows.Length; i++)
                 {
                     string[] rowdata = rows[i].Split(',');
+                    if(rowdata.Length > headers.Length)
+                    {
+                        Program.ShowError($"Inconsistent data for row {i}. This could be because the row contains a comma, which is not currently supported. Skipping row.");
+                        continue;
+                    }
                     UpsertRowData(rowdata, headers, codenamecolumn, type, update);
                 }
             }
@@ -372,7 +378,7 @@ namespace DriveImportCore
             {
                 if (e.Message.ToLower().Contains("cannot update published"))
                 {
-                     throw new Exception("This tool cannot currently update published content. If you wish to update a published item, you will first need to unpublish it within Kentico Cloud.");
+                     throw new Exception("This tool cannot currently update published content. If you wish to update a published item, you will first need to unpublish it within Kentico Kontent.");
                 }
             }
         }

@@ -1,6 +1,6 @@
 
-# cloud-google-drive-import
-This console application can import files from your personal Google Drive account into Kentico Cloud as content items or assets. It can be run without user interaction via command line for regular, scripted imports, or you can use a GUI to provide options.
+# kontent-google-drive-import
+This console application can import files from your personal Google Drive account into Kentico Kontent as content items or assets. It can be run without user interaction via command line for regular, scripted imports, or you can use a GUI to provide options.
 
 ### Setup
 
@@ -22,7 +22,7 @@ Before you begin, you must authorize this application to access your Google Driv
 
 The first time you run the application, it will prompt you to authorize access. Once authorized, this will not happen again.
 
-You must also modify the GoogleDriveImport.json file to include your Kentico Cloud **Project ID**, **Preview API key**, and **Content Management API Key**. These keys can be found in **the API Keys** page on [https://app.kenticocloud.com](https://app.kenticocloud.com). Then, move this file into the directory containing GoogleDriveImport.dll.
+You must also modify the GoogleDriveImport.json file to include your Kentico Cloud **Project ID**, **Preview API key**, and **Content Management API Key**. These keys can be found in **the API Keys** page on [https://app.kontent.ai](https://app.kontent.ai). Then, move this file into the directory containing GoogleDriveImport.dll.
 
 ### Usage
 
@@ -33,16 +33,16 @@ In the directory containing the GoogleDriveImport.dll, open a command prompt and
 -	`-d <filename>` or `-dir <filename>`
 	The name of the folder to import contents from (nullifies -source parameter if present). 
 -	`-t <codename>` or `-type <codename>`
-	The code name of the content type in Kentico Cloud to create for new items.
+	The code name of the content type in Kentico Kontent to create for new items.
 -	`-e <codename>` or `-element <codename>`
-	The code name of the element in Kentico Cloud in which the file's contents will be inserted.
+	The code name of the element in Kentico Kontent in which the file's contents will be inserted.
 -	`-u` or `-update`
 	If passed, content items with the same code name as the imported file(s) will be updated with the new content. If not passed, new content items will always be created.
 
 Currently, the importing of a directory’s contents is only supported when supplying parameters from command line, not using the GUI.
 
 ### Supported file types
-The following file types will be imported into Kentico Cloud as assets:
+The following file types will be imported into Kentico Kontent as assets:
 -	.jpg/.jpeg
 -	.png
 -	.gif
@@ -59,4 +59,4 @@ If a spreadsheet is imported, each row of the spreadsheet will be imported as a 
 
  **Important**: the first row of the spreadsheet must contain one header with the text "Name." Other cells under this column should contain the code name of the content item to be created/updated.
  
- ![Analytics](https://kentico-ga-beacon.azurewebsites.net/api/UA-69014260-4/Kentico/cloud-google-drive-import?pixel)
+ ![Analytics](https://kentico-ga-beacon.azurewebsites.net/api/UA-69014260-4/Kentico/kontent-google-drive-import?pixel)

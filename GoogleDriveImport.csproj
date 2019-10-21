@@ -7,8 +7,8 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.33.0.1198" />
-    <PackageReference Include="KenticoCloud.ContentManagement" Version="1.1.0" />
-    <PackageReference Include="KenticoCloud.Delivery" Version="4.13.0" />
+    <PackageReference Include="KenticoCloud.ContentManagement" Version="1.6.0" />
+    <PackageReference Include="Kentico.Kontent.Delivery" Version="12.1.0" />
   </ItemGroup>
 
 </Project>

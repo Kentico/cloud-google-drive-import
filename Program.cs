@@ -1,16 +1,13 @@
-﻿using Google.Apis.Services;
-using Google.Apis.Util.Store;
-using KenticoCloud.Delivery;
+﻿using Google.Apis.Util.Store;
+using Kentico.Kontent.Delivery;
 using System;
 using System.IO;
-using System.Net;
 using System.Threading;
 using Newtonsoft.Json.Linq;
 using Google.Apis.Drive.v3;
 using Google.Apis.Auth.OAuth2;
 using KenticoCloud.ContentManagement;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DriveImportCore
 {
@@ -33,7 +30,7 @@ namespace DriveImportCore
                 else
                 {
                     // Run autoimport with passed args
-                    CloudHelper.AutoImport(args, driveHelper);
+                    KontentHelper.AutoImport(args, driveHelper);
                 }
             }
         }
@@ -67,7 +64,7 @@ namespace DriveImportCore
         }
 
         /// <summary>
-        /// Displays a list of content types from Kentico Cloud and allows the user to select one
+        /// Displays a list of content types from Kentico Kontent and allows the user to select one
         /// </summary>
         /// <param name="types"></param>
         /// <returns></returns>
@@ -88,7 +85,7 @@ namespace DriveImportCore
                 index--; // Subtract one since index is zero-based
 
                 // Validate that the type has supported elements
-                var elements = CloudHelper.FilterElements(types.Types[index].Elements);
+                var elements = KontentHelper.FilterElements(types.Types[index].Elements);
                 if (elements.Count == 0)
                 {
                     Program.WriteColoredText("Chosen content type has no Text or Rich Text elements, please choose another.", ConsoleColor.Green);
@@ -113,7 +110,7 @@ namespace DriveImportCore
         /// <returns></returns>
         public static ContentElement VerifyContentElement(ContentType contenttype)
         {
-            var elements = CloudHelper.FilterElements(contenttype.Elements);
+            var elements = KontentHelper.FilterElements(contenttype.Elements);
 
             Console.WriteLine();
             Program.WriteColoredText("Which element should the imported text be inserted into? [Enter a number]", ConsoleColor.Green);
@@ -159,7 +156,7 @@ namespace DriveImportCore
             
             if (!DriveHelper.IsAsset(sourceFile))
             {
-                var types = CloudHelper.ListContentTypes();
+                var types = KontentHelper.ListContentTypes();
                 targetType = VerifyContentType(types);
 
                 // If imported file is not a spreadsheet, get target element
@@ -184,7 +181,7 @@ namespace DriveImportCore
                 try
                 {
                     var stream = driveHelper.DownloadFile(sourceFile);
-                    if (stream != null) CloudHelper.BeginImport(stream, sourceFile, targetElement, targetType, update);
+                    if (stream != null) KontentHelper.BeginImport(stream, sourceFile, targetElement, targetType, update);
                 }
                 catch(Exception e)
                 {
@@ -204,13 +201,13 @@ namespace DriveImportCore
             }
         }
 
-        private class KenticoCloudConfig
+        private class KontentConfig
         {
             public string ApiKey;
             public string ProjectID;
             public string PreviewKey;
 
-            public KenticoCloudConfig(string apiKey, string projectId, string previewKey)
+            public KontentConfig(string apiKey, string projectId, string previewKey)
             {
                 ApiKey = apiKey;
                 ProjectID = projectId;
@@ -218,17 +215,17 @@ namespace DriveImportCore
             }
         }
 
-        private static KenticoCloudConfig LoadKenticoCloudConfiguration(string jsonFile)
+        private static KontentConfig LoadKontentConfiguration(string jsonFile)
         {
             JObject settings = JObject.Parse(File.ReadAllText(jsonFile));
             string apiKey = settings.SelectToken("API_KEY").ToString();
             string projectID = settings.SelectToken("PROJECT_ID").ToString();
             string previewKey = settings.SelectToken("PREVIEW_KEY").ToString();
 
-            return new KenticoCloudConfig(apiKey, projectID, previewKey);
+            return new KontentConfig(apiKey, projectID, previewKey);
         }
 
-        private static void InitKenticoCloud(KenticoCloudConfig config)
+        private static void InitKontent(KontentConfig config)
         {
             ContentManagementOptions cmoptions = new ContentManagementOptions
             {
@@ -236,8 +233,13 @@ namespace DriveImportCore
                 ApiKey = config.ApiKey
             };
 
-            CloudHelper.Init(
-                new DeliveryClient(config.ProjectID, config.PreviewKey),
+            KontentHelper.Init(
+                DeliveryClientBuilder
+                    .WithOptions(builder => builder
+                        .WithProjectId(config.ProjectID)
+                        .UsePreviewApi(config.PreviewKey)
+                        .Build())
+                    .Build(),
                 new ContentManagementClient(cmoptions));
         }
 
@@ -263,8 +265,8 @@ namespace DriveImportCore
             Console.ForegroundColor = ConsoleColor.Gray;
             try
             {
-                KenticoCloudConfig cloudConfig = LoadKenticoCloudConfiguration(ConfigFile);
-                InitKenticoCloud(cloudConfig);
+                KontentConfig kontentConfig = LoadKontentConfiguration(ConfigFile);
+                InitKontent(kontentConfig);
 
                 UserCredential credential = LoadGoogleDriveCredentials();
                 driveHelper = new DriveHelper(credential, AppName);
