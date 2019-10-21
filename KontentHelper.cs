@@ -53,7 +53,6 @@ namespace DriveImportCore
             if (DriveHelper.IsSpreadsheet(file))
             {
                 // Import multiple items
-
                 string[] rows = result.Split("\r\n");
                 string[] headers = rows[0].Split(',');
                 int codenamecolumn = Array.IndexOf(headers, SPREADSHEET_CODENAME_HEADER);
@@ -267,7 +266,7 @@ namespace DriveImportCore
         /// <returns></returns>
         public static List<KeyValuePair<string, ContentElement>> FilterElements(IReadOnlyDictionary<string, ContentElement> elements)
         {
-            return elements.Where(e => e.Value.Type == "text" || e.Value.Type == "rich_text").ToList();
+            return elements.Where(e => e.Value.Type == "text" || e.Value.Type == "rich_text" || e.Value.Type == "date_time").ToList();
         }
 
         
