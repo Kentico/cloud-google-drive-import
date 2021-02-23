@@ -70,5 +70,3 @@ You can import these articles into Kontent by running the command
 ```
 dotnet GoogleDriveImport.dll -s Articles -t article -u
 ```
- 
- ![Analytics](https://kentico-ga-beacon.azurewebsites.net/api/UA-69014260-4/Kentico/kontent-google-drive-import?pixel)
